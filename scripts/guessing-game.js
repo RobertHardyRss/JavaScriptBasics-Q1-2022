@@ -15,21 +15,23 @@ button?.addEventListener("click", function () {
 	let isGameOver = false;
 
 	while (isGameOver == false) {
-		let guess = Number(prompt("Pick a number between 1 and 10"));
-		usedGuesses = usedGuesses + 1;
-
-		if (answer == guess) {
-			alert("You won!");
-			isGameOver = true;
-		} else if (usedGuesses > numberOfGuesses) {
+		if (usedGuesses > numberOfGuesses) {
 			alert("You lose! No more guesses!");
 			isGameOver = true;
 		} else {
-			if (guess < answer) {
-				alert("Too low! Guess again.");
+			let guess = Number(prompt("Pick a number between 1 and 10"));
+
+			if (answer == guess) {
+				alert("You won!");
+				isGameOver = true;
 			} else {
-				alert("Too high! Guess again.");
+				if (guess < answer) {
+					alert("Too low!");
+				} else {
+					alert("Too high!");
+				}
 			}
 		}
+		usedGuesses = usedGuesses + 1;
 	}
 });
