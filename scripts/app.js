@@ -6,32 +6,45 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 600;
 
-// @ts-ignore
-ctx.fillStyle = "red";
+class Block {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+		this.color = "red";
+		this.width = 100;
+		this.height = 100;
+		this.xDir = 1;
+		this.yDir = 1;
+	}
 
-let x = 0;
-let y = 0;
+	draw() {
+		if (this.x < 0 || this.x + this.width > canvas.width) {
+			this.xDir = this.xDir * -1;
+		}
 
-const width = 100;
-const height = 50;
+		if (this.y < 0 || this.y + this.height > canvas.height) {
+			this.yDir = this.yDir * -1;
+		}
 
-let xDir = 1;
-let yDir = 1;
+		// @ts-ignore
+		ctx.fillStyle = this.color;
+		ctx?.fillRect(this.x, this.y, this.width, this.height);
+		this.x = this.x + this.xDir;
+		this.y = this.y + this.yDir;
+	}
+}
+
+let block1 = new Block(0, 0);
+let block2 = new Block(400, 100);
+
+block2.color = "blue";
 
 const animate = function () {
 	ctx?.clearRect(0, 0, canvas.width, canvas.height);
 
-	if (x < 0 || x + width > canvas.width) {
-		xDir = xDir * -1;
-	}
+	block1.draw();
+	block2.draw();
 
-	if (y < 0 || y + height > canvas.height) {
-		yDir = yDir * -1;
-	}
-
-	ctx?.fillRect(x, y, width, height);
-	x = x + xDir;
-	y = y + yDir;
 	requestAnimationFrame(animate);
 };
 
