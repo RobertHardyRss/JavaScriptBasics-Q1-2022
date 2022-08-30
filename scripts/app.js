@@ -34,16 +34,32 @@ class Block {
 	}
 }
 
-let block1 = new Block(0, 0);
-let block2 = new Block(400, 100);
+const numberOfBlocks = 10;
+let blocks = [];
+let colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
 
-block2.color = "blue";
+for (let index = 0; index < numberOfBlocks; index++) {
+	let w = Math.random() * 30 + 10;
+	let h = Math.random() * 30 + 10;
+	let x = Math.random() * (canvas.width - w);
+	let y = Math.random() * (canvas.height - h);
+	let colorIndex = Math.floor(Math.random() * colors.length);
+
+	// add random direction to xDir and yDir
+	// and make the random numbers range from -3 to -1 or 1 to 3
+	let block = new Block(x, y);
+	block.width = w;
+	block.height = h;
+	block.color = colors[colorIndex];
+	blocks.push(block);
+}
 
 const animate = function () {
 	ctx?.clearRect(0, 0, canvas.width, canvas.height);
 
-	block1.draw();
-	block2.draw();
+	blocks.forEach((b) => {
+		b.draw();
+	});
 
 	requestAnimationFrame(animate);
 };
